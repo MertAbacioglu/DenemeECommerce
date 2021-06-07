@@ -1,0 +1,104 @@
+﻿@model PAVM
+@{
+    ViewBag.Title = "ShoppingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:red">@TempData["SepetBos"]</h2>
+<h2 style="color:red">@TempData["odeme"]</h2>
+<h2 style="color:red">@TempData["sorun"]</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <section class="panel">
+            <div class="panel-body">
+                <h2 style="color:brown">Kategoriler</h2>
+                <ul>
+                    @foreach (Category item in Model.Categories)
+                    {
+                        <li style="padding-top:3px">@Html.ActionLink(item.CategoryName, "ShoppingList", new { CategoryID = item.ID }, new { @class = "btn btn-primary" })</li>
+                    }
+                </ul>
+            </div>
+        </section>
+
+    </div>
+    <div class="col-md-9">
+        <section class="panel">
+            <div class="panel-body">
+
+
+                <div class="pull-right">
+                    <ul class="pagination pagination-sm pro-page-list">
+
+                        @if (TempData["catID"] != null)
+                        {
+                            <li>@Html.PagedListPager(Model.PagedProducts, page => Url.Action("ShoppingList", new { page, CategoryID = TempData["catID"] }))</li>
+                        }
+                        else
+                        {
+                            <li>@Html.PagedListPager(Model.PagedProducts, page => Url.Action("ShoppingList", new { page }))</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="row product-list">
+            @foreach (Product item in Model.PagedProducts)
+            {
+                <div class="col-md-4">
+                    <section class="panel">
+                        <div class="pro-img-box">
+                            @if (item.ImagePath == null)
+                            {
+                                <img src="~/Pictures/notFound.png" width="100" ,height="300" alt="No image found" ,title="@item.ProductName" />
+
+                            }
+                            else
+                            {
+                                <img src="@item.ImagePath" width="100" ,height="300" ,title="@item.ProductName" />
+                            }
+
+                            <a href="@Url.Action("AddToChart", new { id = item.ID })" class="adtocart">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h4>
+                                <a href="#" class="pro-title">
+                                    @if (item.ProductName.Length > 15)
+                                    {
+                                        @($"{item.ProductName}...")
+                                    }
+                                    else
+                                    {@item.ProductName}
+
+
+
+                                </a>
+                            </h4>
+                            <p class="price">$@item.UnitPrice</p>
+                        </div>
+                    </section>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+@section Sepet{
+
+    <li><a href="@Url.Action("CartPage","Shopping")"><i class=" icon-shopping-cart" style="color:green"></i>Cart</a></li>
+}
+
+@section LogOut{
+    <li><a href="@Url.Action("LogOut","Home")"><i class=" glyphicon-log-out" style="color:red"></i>LogOut</a></li>
+}
+
+@section LogOutBut{
+    <li>@Html.ActionLink("LogOut", "Home", new { @class = "btn btn-warning" }, new { @style = "color:Red" })</li>
+}

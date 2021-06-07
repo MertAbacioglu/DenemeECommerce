@@ -1,0 +1,10 @@
+﻿@model CategoryVM 
+@{
+    ViewBag.Title = "CategoryDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Category Detail for @Model.Category.CategoryName</h2>
+
+<label style="border-width">@Model.Category.Description</label>
+
