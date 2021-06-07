@@ -46,6 +46,7 @@
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Deneme.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
